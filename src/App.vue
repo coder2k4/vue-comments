@@ -1,44 +1,32 @@
 <template>
-  <ul>
-    <ListItem v-for="res in storedResources"
-              :key="res.id"
-              :id="res.id"
-              :title="res.title"
-              :description="res.description"
-              :link="res.link"
-    />
-  </ul>
+  <TheHeader title="Vue Blog"/>
+  <PostsTabs/>
 </template>
 
 <script>
-import ListItem from "@/components/ListItem/ListItem";
+
+import TheHeader from "@/components/Layout/TheHeader";
+import PostsTabs from "@/components/Posts/PostsTabs";
 
 export default {
-  components: {
-    ListItem
-  },
+
   name: "App",
-  data() {
-    return {
-      storedResources: [
-        {
-          id: 'official-guide',
-          title: 'Official Guide',
-          description: 'The official Vue.js documentation.',
-          link: 'https://vuejs.org',
-        },
-        {
-          id: 'google',
-          title: 'Google',
-          description: 'Learn to google...',
-          link: 'https://google.org',
-        },
-      ]
-    }
-  }
+  components: {PostsTabs, TheHeader},
 }
 </script>
 
-<style scoped>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0;
+}
 </style>
