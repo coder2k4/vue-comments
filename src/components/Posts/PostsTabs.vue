@@ -52,6 +52,11 @@ export default {
       }
       this.storedResources.unshift(newPostData)
       this.selectedTab = 'PostsList'
+    },
+    removePost(id) {
+      const index = this.storedResources.findIndex(item => item.id === id)
+      this.storedResources.splice(index, 1)
+      console.log('DELETE')
     }
   },
   computed: {
@@ -66,7 +71,8 @@ export default {
   provide() {
     return {
       resources: this.storedResources,
-      addPost: this.addPost
+      addPost: this.addPost,
+      removePost: this.removePost,
     }
   }
 }

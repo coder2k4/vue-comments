@@ -1,20 +1,33 @@
 <template>
+  <base-dialog v-if="inputIsInvalid" @close="confirmError">
+    <template v-slot:header>
+      <h1>Ошибка данных</h1>
+    </template>
+    <template v-slot:default>
+      <p>Просто какой-то текст</p>
+    </template>
+
+    <template #actions>
+      <base-button @click="confirmError">ну ок!</base-button>
+    </template>
+
+  </base-dialog>
   <base-card>
     <form @submit.prevent="submitData">
       <div class="form-control">
-        <label for="title">Title</label>
+        <label for="title">Заголовок</label>
         <input id="title" name="title" type="text" ref="titleRef"/>
       </div>
       <div class="form-control">
-        <label for="description">Description</label>
+        <label for="description">Описание</label>
         <textarea id="description" name="description" rows="3" ref="descriptionRef"></textarea>
       </div>
       <div class="form-control">
-        <label for="link">Link</label>
+        <label for="link">Ссылка</label>
         <input id="link" name="link" type="url" ref="linkRef"/>
       </div>
       <div>
-        <base-button type="submit">Add Resource</base-button>
+        <base-button type="submit">Добавить пост</base-button>
       </div>
     </form>
   </base-card>
@@ -24,7 +37,9 @@
 export default {
   name: "PostsAdd",
   data() {
-    return {}
+    return {
+      inputIsInvalid: true
+    }
   },
   methods: {
     submitData() {
@@ -32,7 +47,16 @@ export default {
       const enteredDescription = this.$refs.descriptionRef.value
       const enteredLink = this.$refs.linkRef.value
 
+      if(enteredTitle.trim() === '' || enteredDescription.trim() === '' || enteredLink.trim() === '') {
+        this.inputIsInvalid = true
+        return
+      }
+
+
       this.addPost(enteredTitle, enteredDescription, enteredLink)
+    },
+    confirmError() {
+      this.inputIsInvalid = false
     }
   },
   inject: ['addPost']
